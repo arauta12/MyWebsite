@@ -1,0 +1,47 @@
+.project {
+    padding: 1rem;
+    margin: 1rem;
+    display: flow-root;
+}
+
+.project h3 {
+    color: var(--complement-color);
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    text-align: center;
+}
+
+.project img {
+    max-height: 300px;
+    float: left;
+    margin: 0 2rem 1rem 0;
+    border-radius: 20px;
+}
+
+.project p, .project a {
+    flex-grow: 2;
+    font-size: 1.25rem;
+}
+
+.project a {
+    display: block;
+    text-align: center;
+    margin-top: 1rem;
+    text-decoration: underline;
+
+    color: var(--text-color);
+}
+
+.project a:hover {
+    color: var(--nav-hover-color);
+}
+
+.del-project-button {
+    float: right;
+    margin-left: -50px;
+    background-color: var(--complement-color);
+}
+
+.del-project-button:hover {
+    background-color: red;
+}

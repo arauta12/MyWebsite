@@ -1,0 +1,37 @@
+nav {
+    height: 100px;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+    padding-inline: 2rem;
+
+    animation: emerge 1s ease-out 0s 1 normal forwards;
+}
+
+.nav-item {
+    font-size: 1.5rem;
+}
+
+.nav-item a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.nav-item a img {
+    width: 35px;
+    height: 35px;
+    vertical-align: middle;
+    padding: 2px;
+    border-radius: 50%;
+}
+
+.nav-item a img:hover {
+    filter: brightness(0.5);
+}
+
+.nav-item a:hover {
+    color: var(--nav-hover-color);
+    text-decoration: underline;
+    text-shadow: 0 0 2px var(--nav-hover-color);
+}

@@ -1,0 +1,10 @@
+#message-section {
+    padding: 2rem;
+    margin: 2rem;
+}
+
+#message-section h2 {
+    text-align: center;
+    font-size: 3rem;
+    text-decoration: underline;
+}

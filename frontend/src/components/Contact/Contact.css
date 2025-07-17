@@ -1,0 +1,81 @@
+#contact > h2 {
+    text-decoration: underline;
+    font-size: 3rem;
+    margin-bottom: 4rem;
+    text-align: center;
+}
+
+.contact-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.section-item {
+    flex-basis: 50%;
+}
+
+form input, form textarea {
+    font-size: inherit;
+    width: 100%;
+    padding: 10px;
+    background: none;
+    border: 1px solid var(--text-color);
+    border-radius: 20px;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+form textarea {
+    resize: vertical;
+    font-family: inherit;
+    border-bottom-right-radius: 0;
+}
+
+form button {
+    font-size: 1rem;
+    padding: 10px;
+    border: 1px solid var(--complement-color);
+    border-radius: 20px;
+    background-color: var(--complement-color);
+    color: var(--text-color);
+
+    transform: scale(1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+form button:hover {
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(252, 79, 79, 0.5);
+    transform: scale(1.05);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.contact-info {
+    display: flex;
+    flex-flow: column wrap;
+    align-content: center;
+    justify-content: flex-start;
+    gap: 1rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.contact-item img {
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+}
+
+.contact-item p {
+    display: inline-block;
+}
+
+a:hover {
+    text-decoration: underline;
+}

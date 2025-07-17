@@ -1,0 +1,78 @@
+#projects {
+    margin: 2rem auto;
+}
+
+#projects > h2 {
+    font-size: 3rem;
+    margin-bottom: 4rem;
+    text-align: center;
+    text-decoration: underline;
+}
+
+.project-view {
+    background-color: rgba(1, 24, 12, 0.85);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    padding: 1rem;
+}
+
+.buttons-container {
+    display: flex;
+    flex-flow: row nowrap;
+    padding: 5px;
+    gap: 1rem;
+    overflow-x: scroll;
+    border-bottom: 1px solid var(--text-color);
+}
+
+.project-button-container {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 5px;
+    
+}
+
+.project-button {
+    font-size: 1rem;
+    border: none;
+    height: 50px;
+    margin-bottom: 1rem;
+    padding: 10px;
+    box-shadow: 2px 2px 2px 2px rgb(114, 114, 114);
+    transition: background-color 0.5s;
+}
+
+.project-button:hover {
+    cursor: pointer;
+    transition: background-color 0.5s;
+}
+
+.project-button:active {
+    box-shadow: inset 4px 4px 4px 2px rgb(114, 114, 114);
+}
+
+.show-button {
+    background: none;
+    color: var(--text-color);
+    border-radius: 10px;
+}
+
+.show-button:hover {
+    background-color: var(--complement-color);
+}
+
+.edit-button {
+    padding: 5px;
+    border-radius: 25px;
+    color: var(--text-color);
+    width: 50px;
+    font-size: 1.5rem;
+}
+
+.add-project-button {
+    background-color: rgb(15, 74, 1);
+} 
+
+.add-project-button:hover {
+    background-color: rgb(35, 173, 1);
+}

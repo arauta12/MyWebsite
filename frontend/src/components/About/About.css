@@ -1,0 +1,34 @@
+#aboutMe > h2 {
+    text-decoration: underline;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+#aboutMe h3 {
+    font-size: 2rem;
+    color: var(--complement-color);
+    margin-bottom: 1rem;
+}
+
+.sectionInfo {
+    align-self: flex-start;
+    padding: 20px;
+    margin-bottom: 0;
+}
+
+.sectionInfo h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.sectionInfo > p, .sectionInfo li {
+    font-size: 1.2rem;
+    line-height: 1.5;
+}
+
+.sectionInfo ul {
+    list-style-type: circle;
+    padding: 1rem;
+    padding-bottom: 0;
+}

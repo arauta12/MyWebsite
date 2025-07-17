@@ -1,0 +1,7 @@
+header {
+    margin-bottom: 2rem;
+    position: sticky;
+    top: 0;
+    background-color: rgba(18, 18, 18, 0.8);
+    z-index: 1;
+}

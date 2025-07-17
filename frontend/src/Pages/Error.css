@@ -1,0 +1,15 @@
+#error-page div {
+    min-height: 100vh;
+    margin-inline: auto;
+}
+
+#error-page h1 {
+    font-size: 3rem;
+    text-align: center;
+}
+
+#error-page p {
+    font-size: 2rem;
+    text-align: center;
+}
+

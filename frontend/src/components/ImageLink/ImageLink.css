@@ -1,0 +1,15 @@
+.web-container img {
+    width: 68px;
+    height: 68px;
+    border-radius: 50px;
+
+    box-shadow: none;
+    transform: scale(1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.web-container img:hover {
+    box-shadow: 0 0 20px rgba(252, 79, 79, 0.5);
+    transform: scale(1.05);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
