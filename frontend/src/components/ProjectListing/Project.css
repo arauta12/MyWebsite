@@ -18,7 +18,7 @@
     border-radius: 20px;
 }
 
-.project p, .project a {
+.project ul, .project a {
     flex-grow: 2;
     font-size: 1.25rem;
 }

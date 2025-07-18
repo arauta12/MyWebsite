@@ -7,10 +7,10 @@ const Message = require('../models/message.model');
  * @returns List of all message objects satisfying the conditions
  */
 const getMessages = async (req, res) => {
-    const { filter = {} } = req.body;
+    // const { filter = {} } = req.body;
 
     try {
-        const messages = await Message.find(filter, '-_id -__v');
+        const messages = await Message.find({}, '-_id -__v');
         return res.status(200).json(messages);
     } catch (err) {
         return res.status(500).json({ status: "failed", message: err.message });

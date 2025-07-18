@@ -7,10 +7,10 @@ const Project = require('../models/project.model');
  * @returns List of all project objects satisfying the conditions
  */
 const getAllProjects = async (req, res) => {
-    const { filter = {} } = req.body;
+    // const { filter = "" } = req.body;
 
     try {
-        const projects = await Project.find(filter, '-_id -__v');
+        const projects = await Project.find({}, '-_id -__v');
         return res.status(200).json(projects);
     } catch (err) {
         return res.status(500).json({ status: "failed", message: err.message });

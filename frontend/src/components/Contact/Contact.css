@@ -16,7 +16,7 @@
     flex-basis: 50%;
 }
 
-form input, form textarea {
+input, textarea {
     font-size: inherit;
     width: 100%;
     padding: 10px;
@@ -27,10 +27,14 @@ form input, form textarea {
     color: var(--text-color);
 }
 
-form textarea {
+
+textarea {
     resize: vertical;
     font-family: inherit;
     border-bottom-right-radius: 0;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--text-color) var(--section-bg-color);
 }
 
 form button {
@@ -50,6 +54,11 @@ form button:hover {
     box-shadow: 0 0 20px rgba(252, 79, 79, 0.5);
     transform: scale(1.05);
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+input:focus, textarea:focus {
+    border: 2px solid var(--complement-color);
+    outline: none;
 }
 
 .contact-info {
@@ -76,6 +85,6 @@ form button:hover {
     display: inline-block;
 }
 
-a:hover {
+.contact-link:hover {
     text-decoration: underline;
 }

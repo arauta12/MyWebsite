@@ -1,14 +1,6 @@
 import "./Project.css";
 
-function Project({
-	name,
-	imgName,
-	description,
-	details,
-	link,
-	canEdit,
-	deleteProject,
-}) {
+function Project({ name, image, description, link, canEdit, deleteProject }) {
 	return (
 		<section className="project">
 			<h3>
@@ -25,19 +17,17 @@ function Project({
 
 			<div className="projectInfo">
 				<img
-					src={`/images/projectImages/${imgName}`}
+					src={`/images/projectImages/${image}`}
 					alt={name}
 					height={300}
 				/>
-				<p>{description}</p>
+				<ul>
+					{description &&
+						description.map((content, i) => (
+							<li key={i}>{content}</li>
+						))}
+				</ul>
 			</div>
-
-			{details && (
-				<p>
-					<br />
-					{details}
-				</p>
-			)}
 			{link && (
 				<a href={link} target="_blank">
 					See more

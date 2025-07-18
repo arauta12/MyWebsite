@@ -1,14 +1,16 @@
 import "./Message.css";
 
-function Message({ name, email, message, sentTime }) {
-	const timeElapsed = Date.now() - sentTime;
+function Message({ name, email, contents }) {
 	return (
-		<div className="message-container">
+		<div className="message-item">
 			<h3>{name}</h3>
-			<p>{message}</p>
-			<p>{email}</p>
 			<p>
-				<time datetime={timeElapsed}>{timeElapsed}</time>
+				<span>Email: </span>
+				{email}
+			</p>
+			<p>
+				<span>Message: </span>
+				{contents}
 			</p>
 		</div>
 	);

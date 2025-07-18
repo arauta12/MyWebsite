@@ -20,23 +20,20 @@
     display: flex;
     flex-flow: row nowrap;
     padding: 5px;
+    padding-bottom: calc(1rem + 5px);
     gap: 1rem;
-    overflow-x: scroll;
+    overflow-x: auto;
     border-bottom: 1px solid var(--text-color);
-}
 
-.project-button-container {
-    display: flex;
-    flex-flow: row nowrap;
-    gap: 5px;
-    
+    scrollbar-color: var(--text-color) var(--section-bg-color);
+    scrollbar-width:thin;
+
 }
 
 .project-button {
     font-size: 1rem;
     border: none;
     height: 50px;
-    margin-bottom: 1rem;
     padding: 10px;
     box-shadow: 2px 2px 2px 2px rgb(114, 114, 114);
     transition: background-color 0.5s;
