@@ -11,7 +11,9 @@
 
 #login-section button {
     width: 30%;
+    margin-top: 2rem;
     max-width: 300px;
+    font-weight: bold;
 }
 
 #login-section label {

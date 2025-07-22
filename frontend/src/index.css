@@ -10,10 +10,10 @@
 }
 
 :root {
-  --text-color: whitesmoke;
-  --section-bg-color: rgba(36, 35, 35, 0.65);
+  --text-color: #f5f5f5;
+  --section-bg-color: #242323a6;
   --nav-hover-color: #94C7B6;
-  --complement-color: rgb(252, 79, 79);
+  --complement-color: #fc4f4f;
 }
 
 html {

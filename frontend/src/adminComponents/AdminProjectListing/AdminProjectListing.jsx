@@ -18,12 +18,12 @@ function AdminProjectListing() {
 				const result = await axios.get(
 					"http://localhost:3000/api/projects",
 					{
-						filter: { show: true },
+						// filter: { show: true },
 						timeout: 5000,
 					}
 				);
 
-				setProjects(result.data);
+				setProjects(result.data.data);
 				setIsLoading(false);
 			} catch (err) {
 				console.error(`ERROR: ${err.message}`);

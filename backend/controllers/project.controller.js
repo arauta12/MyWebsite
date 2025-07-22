@@ -1,4 +1,5 @@
 const Project = require('../models/project.model');
+const chalk = require('chalk');
 
 /**
  * Get every project that exists
@@ -11,9 +12,10 @@ const getAllProjects = async (req, res) => {
 
     try {
         const projects = await Project.find({}, '-_id -__v');
-        return res.status(200).json(projects);
+        return res.status(200).json({ status: "success", data: projects });
     } catch (err) {
-        return res.status(500).json({ status: "failed", message: err.message });
+        console.error(chalk.red(`PROJECT ROUTE ERROR: ${err.message}!`));
+        return res.status(500).json({ status: "failed", message: "Something went wrong. Try again." });
     }
 };
 
@@ -25,10 +27,11 @@ const getProject = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const project = await Project.findById(id);
-        return res.status(200).json(project);
+        const project = await Project.findById(id, '-_id -__v');
+        return res.status(200).json({ status: "success", data: project });
     } catch (err) {
-        return res.status(500).json({ status: "failed", message: err.message });
+        console.error(chalk.red(`PROJECT ROUTE ERROR: ${err.message}!`));
+        return res.status(500).json({ status: "failed", message: "Something went wrong. Try again." });
     }
 };
 
@@ -47,7 +50,8 @@ const createProject = async (req, res) => {
         await Project.create({ name, image, description, link, show });
         return res.status(201).json({ status: "success", data: { name, show } });
     } catch (err) {
-        return res.status(500).json({ status: "failed", message: err.message });
+        console.error(chalk.red(`PROJECT ROUTE ERROR: ${err.message}!`));
+        return res.status(500).json({ status: "failed", message: "Something went wrong. Try again." });
     }
 };
 
@@ -59,10 +63,11 @@ const deleteProject = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const { name, show } = await Project.findByIdAndDelete(id);
+        const { name, show } = await Project.findByIdAndDelete(id, '-_id -__v');
         return res.status(200).json({ status: "success", data: { name, show } });
     } catch (err) {
-        return res.status(500).json({ status: "failed", message: err.message });
+        console.error(chalk.red(`PROJECT ROUTE ERROR: ${err.message}!`));
+        return res.status(500).json({ status: "failed", message: "Something went wrong. Try again." });
     }
 };
 
@@ -78,11 +83,10 @@ const updateProject = async (req, res) => {
 
     try {
         const project = await Project.findByIdAndUpdate(id, data);
-        console.log(data);
-
-        return res.status(200).json({ status: "success", data });
+        return res.status(200).json({ status: "success", data: { name: project.name, show: project.show } });
     } catch (err) {
-        return res.status(500).json({ status: "failed", message: err.message });
+        console.error(chalk.red(`PROJECT ROUTE ERROR: ${err.message}!`));
+        return res.status(500).json({ status: "failed", message: "Something went wrong. Try again." });
     }
 };
 

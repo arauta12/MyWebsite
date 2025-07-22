@@ -17,6 +17,10 @@ const userSchema = new mongoose.Schema({
             values: [ 'admin', 'viewer' ],
             message: '{VALUE} is not a valid role!'
         }
+    },
+    loggedIn: {
+        type: Boolean,
+        default: false
     }
 });
 

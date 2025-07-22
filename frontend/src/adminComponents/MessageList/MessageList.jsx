@@ -17,7 +17,7 @@ function MessageList() {
 					"http://localhost:3000/api/messages",
 					{ timeout: 5000 }
 				);
-				setMessageList(res.data);
+				setMessageList(res.data.data);
 			} catch (error) {
 				setErrorMessage(`Could not get messages: ${error.message}`);
 			} finally {

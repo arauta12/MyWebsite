@@ -16,6 +16,9 @@ function Navbar() {
 			<p className="nav-item">
 				<a href="/#contact">Contact</a>
 			</p>
+			<p className="nav-item">
+				<a href="/admin">Admin</a>
+			</p>
 		</nav>
 	);
 }

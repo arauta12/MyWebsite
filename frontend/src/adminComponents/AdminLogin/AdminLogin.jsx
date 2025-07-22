@@ -1,21 +1,65 @@
-import { useState, useRef } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import AdminHeader from "../AdminHeader";
 import Loading from "../../components/Loading";
 import axios from "axios";
 import "./AdminLogin.css";
 
 function AdminLogin() {
+	axios.defaults.withCredentials = true;
+
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [errorMessage, setErrorMessage] = useState("");
+
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		const autoLogin = async () => {
+			try {
+				const resp = await axios.post(
+					"http://localhost:3000/api/auth/login",
+					{}
+				);
+				if (resp.data?.status === "success") {
+					navigate("/admin/home");
+				}
+			} catch (err) {
+				console.error(err);
+
+				console.log("FAILED TO AUTO login");
+			}
+		};
+
+		autoLogin();
+	}, []);
 
 	const handleLogin = async (e) => {
 		e.preventDefault();
 
 		try {
-			throw new Error("HI");
-		} catch (error) {
-			setErrorMessage("Login error! Try again.");
+			const res = await axios.post(
+				"http://localhost:3000/api/auth/login",
+				{
+					data: { username, password },
+				}
+			);
+
+			const status = res.data;
+			if (status === "failed") {
+				setErrorMessage(
+					res.data.message || "Unable to login! Try again."
+				);
+			} else {
+				console.log("success!");
+				navigate("/admin/home");
+			}
+		} catch (err) {
+			console.error(err.message);
+
+			setErrorMessage(
+				err.response?.data?.message || "Login error! Try again."
+			);
 
 			setTimeout(() => {
 				setErrorMessage("");
@@ -43,7 +87,7 @@ function AdminLogin() {
 					<p>
 						<label htmlFor="password">Password: </label>
 						<input
-							type="text"
+							type="password"
 							name="password"
 							id="password"
 							placeholder="Enter password..."
