@@ -1,9 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import Main from "./Pages/Main";
 import Admin from "./Pages/Admin";
 import Error from "./Pages/Error";
+import AdminLogin from "./adminComponents/AdminLogin/AdminLogin";
+import AdminHeader from "./adminComponents/AdminHeader";
 import "./App.css";
 
 function App() {
@@ -34,7 +36,11 @@ function App() {
 		<Layout ref={header}>
 			<Routes>
 				<Route path="/" element={<Main />} />
-				<Route path="/admin" element={<Admin />} />
+				<Route path="admin">
+					<Route index element={<AdminLogin />} />
+					<Route path="login" element={<AdminLogin />} />
+					<Route path="home" element={<Admin />} />
+				</Route>
 				<Route path="*" element={<Error />} />
 			</Routes>
 		</Layout>

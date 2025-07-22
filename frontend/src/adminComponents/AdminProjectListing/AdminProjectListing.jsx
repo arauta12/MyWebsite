@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Loading from "../Loading";
-import Project from "./Project";
-import "./ProjectListing.css";
+import Loading from "../../components/Loading";
+import CreateProject from "../CreateProject";
+import Project from "../../components/ProjectListing/Project";
+import "../../components/ProjectListing/ProjectListing";
 
-// NOTE: remove console.log statements
-
-function ProjectListing({ canEdit }) {
+function AdminProjectListing() {
 	const [isLoading, setIsLoading] = useState(true);
 	const [errorMessage, setErrorMessage] = useState("");
 	const [projects, setProjects] = useState([]);
 	const [projectIndex, setProjectIndex] = useState(0);
+	const [newProjectObj, setNewProjectObj] = useState({});
 
 	useEffect(() => {
 		const handleGetProjects = async () => {
@@ -83,6 +83,13 @@ function ProjectListing({ canEdit }) {
 				) : (
 					<>
 						<div className="buttons-container">
+							<button
+								className="edit-button add-project-button project-button"
+								onClick={saveProject}
+							>
+								+
+							</button>
+
 							{projects.map((project, i) => (
 								<button
 									onClick={() => handleChangeIndex(i)}
@@ -95,7 +102,7 @@ function ProjectListing({ canEdit }) {
 						</div>
 						<Project
 							{...selectedProject}
-							canEdit={false}
+							canEdit={true}
 							deleteProject={deleteProject}
 						/>
 					</>
@@ -105,4 +112,4 @@ function ProjectListing({ canEdit }) {
 	);
 }
 
-export default ProjectListing;
+export default AdminProjectListing;

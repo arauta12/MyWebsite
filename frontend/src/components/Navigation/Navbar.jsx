@@ -8,7 +8,7 @@ function Navbar() {
 				<a href="/#">Home</a>
 			</p>
 			<p className="nav-item">
-				<a href="/#aboutMe">About Me</a>
+				<a href="/#aboutMe">About</a>
 			</p>
 			<p className="nav-item">
 				<a href="/#projects">Projects</a>

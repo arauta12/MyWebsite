@@ -1,0 +1,23 @@
+.login-container {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+#login-section label, #login-section button {
+    font-size: 1.25rem;
+}
+
+#login-section button {
+    width: 30%;
+    max-width: 300px;
+}
+
+#login-section label {
+    margin-right: 1rem;
+}
+
+#login-section input {
+    width: auto;
+}

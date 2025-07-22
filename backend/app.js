@@ -3,6 +3,7 @@ const helmet = require('helmet');
 const cors = require('cors');
 
 
+const authRoute = require('./routes/auth.route');
 const projectRoute = require('./routes/project.route');
 const messageRoute = require('./routes/message.route');
 
@@ -21,6 +22,7 @@ app.use(cors(corsConfig));
 app.use(helmet());
 app.use(express.json());
 
+app.use('/api/auth', authRoute);
 app.use('/api/projects', projectRoute);
 app.use('/api/messages', messageRoute);
 
