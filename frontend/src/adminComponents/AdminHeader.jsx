@@ -1,7 +1,7 @@
-function AdminHeader({ children }) {
+function AdminHeader({ role, children }) {
 	return (
 		<div id="admin-page">
-			<h1>Admin</h1>
+			<h1>{role || "Admin"}</h1>
 			<hr />
 			{children}
 		</div>

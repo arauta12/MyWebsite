@@ -1,6 +1,36 @@
 const User = require('../models/user.model');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const chalk = require('chalk');
+
+const verifyToken = async (req, res, next) => {
+    const jwtToken = req.cookies.jwt_token;
+
+    if (!jwtToken)
+        return res.status(401).json({ status: "failed", message: "Unauthorized!" });
+
+    try {
+        const { exp, username, role } = jwt.verify(jwtToken, process.env.JWT_SECRET);
+        const existingUser = await User.findOne({ username, role });
+
+        if (!existingUser || !existingUser.loggedIn)
+            return res.status(401).json({ status: "failed", message: "Unauthorized!" });
+
+        req.locals = role;
+        next();
+    } catch (err) {
+        console.error(chalk.red(`ERROR Verify token: ${err.message}`));
+        return res.status(500).json({ status: "failed", message: "Something went wrong! Try again." });
+    }
+};
+
+const verifyAdmin = async (req, res, next) => {
+    if (!req.locals || req.locals !== "Admin")
+        return res.status(403).json({ status: "failed", message: "Unauthorized!" });
+
+    delete req.locals;
+    next();
+};
 
 const signup = async (req, res) => {
     const { data: { username, password, role = 'viewer' } } = req.body;
@@ -36,15 +66,20 @@ const login = async (req, res) => {
 
         if (jwtToken) {
             const jwtData = jwt.verify(jwtToken, process.env.JWT_SECRET);
-            if (jwtData.exp < Date.now() && jwtData.username && ([ "admin", "viewer" ].includes(jwtData.role))) {
-                return res.status(200).json({ status: "success", data: { username: jwtData.username, role: jwtData.role } });
+
+            const { exp, username, role } = jwtData;
+            const existingUser = await User.findOne({ username, role });
+
+            if (existingUser && existingUser.loggedIn) {
+                const expired = (exp <= (Math.ceil(Date.now() / 1000)));
+                if (!expired) {
+                    return res.status(200).json({ status: "success", data: { username: jwtData.username, role: jwtData.role } });
+                }
             }
         }
 
         if (!data || !username || !password)
             return res.status(400).json({ status: "failed", message: "Missing username or password!" });
-
-        console.log("BODY EXISTS!");
 
         const user = await User.findOne({ username });
         const passwordCompare = await bcrypt.compare(password, user?.password || "");
@@ -59,6 +94,7 @@ const login = async (req, res) => {
         user.loggedIn = true;
         await user.save();
 
+        res.clearCookie("jwt_token");
         res.cookie("jwt_token", token, {
             maxAge: 1000 * 60 * 60 * 10, // 10hrs
             secure: true,
@@ -67,7 +103,8 @@ const login = async (req, res) => {
 
         return res.status(200).json({ status: "success", data: { username, role: user.role } });
     } catch (err) {
-        return res.status(500).json({ status: "failed", message: err.message });
+        console.error(chalk.red(`ERROR Login: ${err.message}`));
+        return res.status(500).json({ status: "failed", message: "Something went wrong! Try again." });
     }
 };
 
@@ -87,7 +124,8 @@ const logout = async (req, res) => {
         res.clearCookie("jwt_token");
         return res.status(200).json({ status: "success", data: user.username });
     } catch (err) {
-        return res.status(500).json({ status: "failed", message: err.message });
+        console.error(chalk.red(`ERROR Logout: ${err.message}`));
+        return res.status(500).json({ status: "failed", message: "Something went wrong! Try again." });
     }
 };
 
@@ -95,4 +133,6 @@ module.exports = {
     signup,
     login,
     logout,
+    verifyToken,
+    verifyAdmin,
 };

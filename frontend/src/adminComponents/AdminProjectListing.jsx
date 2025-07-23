@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Loading from "../../components/Loading";
-import CreateProject from "../CreateProject";
-import Project from "../../components/ProjectListing/Project";
-import "../../components/ProjectListing/ProjectListing";
+import Loading from "../components/Loading";
+import CreateProject from "./CreateProject";
+import Project from "../components/ProjectListing/Project";
+import ProjectListing from "../components/ProjectListing/ProjectListing";
+import "../components/ProjectListing/ProjectListing";
 
-function AdminProjectListing() {
+function AdminProjectListing({ role }) {
 	const [isLoading, setIsLoading] = useState(true);
 	const [errorMessage, setErrorMessage] = useState("");
 	const [projects, setProjects] = useState([]);
@@ -27,7 +28,9 @@ function AdminProjectListing() {
 				setIsLoading(false);
 			} catch (err) {
 				console.error(`ERROR: ${err.message}`);
-				setErrorMessage("Could not get project info.");
+				setErrorMessage(
+					err.response?.data?.message || "Could not get projects."
+				);
 			} finally {
 				setIsLoading(false);
 			}
@@ -83,12 +86,14 @@ function AdminProjectListing() {
 				) : (
 					<>
 						<div className="buttons-container">
-							<button
-								className="edit-button add-project-button project-button"
-								onClick={saveProject}
-							>
-								+
-							</button>
+							{role === "Admin" && (
+								<button
+									className="edit-button add-project-button project-button"
+									onClick={saveProject}
+								>
+									+
+								</button>
+							)}
 
 							{projects.map((project, i) => (
 								<button
@@ -102,7 +107,7 @@ function AdminProjectListing() {
 						</div>
 						<Project
 							{...selectedProject}
-							canEdit={true}
+							canEdit={role === "Admin" ? true : false}
 							deleteProject={deleteProject}
 						/>
 					</>

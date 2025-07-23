@@ -1,6 +1,17 @@
 const Project = require('../models/project.model');
 const chalk = require('chalk');
 
+
+const getDisplayProjects = async (req, res) => {
+    try {
+        const projects = await Project.find({ show: true }, '-_id -__v');
+        return res.status(200).json({ status: "success", data: projects });
+    } catch (err) {
+        console.error(chalk.red(`PROJECT ROUTE ERROR: ${err.message}!`));
+        return res.status(500).json({ status: "failed", message: "Something went wrong. Try again." });
+    }
+};
+
 /**
  * Get every project that exists
  * 
@@ -95,5 +106,6 @@ module.exports = {
     getProject,
     createProject,
     deleteProject,
-    updateProject
+    updateProject,
+    getDisplayProjects
 };

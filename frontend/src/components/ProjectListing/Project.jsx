@@ -20,6 +20,7 @@ function Project({ name, image, description, link, canEdit, deleteProject }) {
 					src={`/images/projectImages/${image}`}
 					alt={name}
 					height={300}
+					loading="lazy"
 				/>
 				<ul>
 					{description &&

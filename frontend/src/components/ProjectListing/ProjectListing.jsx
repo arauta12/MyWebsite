@@ -16,9 +16,8 @@ function ProjectListing() {
 		const handleGetProjects = async () => {
 			try {
 				const result = await axios.get(
-					"http://localhost:3000/api/projects",
+					"http://localhost:3000/api/projects/public",
 					{
-						// filter: { show: true },
 						timeout: 5000,
 					}
 				);

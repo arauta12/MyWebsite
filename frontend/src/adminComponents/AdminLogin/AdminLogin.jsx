@@ -22,12 +22,11 @@ function AdminLogin() {
 					{}
 				);
 				if (resp.data?.status === "success") {
+					console.log("Successful auto-login!");
 					navigate("/admin/home");
 				}
 			} catch (err) {
-				console.error(err);
-
-				console.log("FAILED TO AUTO login");
+				console.error(err.message);
 			}
 		};
 
