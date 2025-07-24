@@ -57,19 +57,3 @@
 .show-button:hover {
     background-color: var(--complement-color);
 }
-
-.edit-button {
-    padding: 5px;
-    border-radius: 25px;
-    color: var(--text-color);
-    width: 50px;
-    font-size: 1.5rem;
-}
-
-.add-project-button {
-    background-color: rgb(15, 74, 1);
-} 
-
-.add-project-button:hover {
-    background-color: rgb(35, 173, 1);
-}

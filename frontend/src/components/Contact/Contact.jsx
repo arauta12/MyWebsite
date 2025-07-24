@@ -57,6 +57,7 @@ function Contact() {
 				setMessageObj({ name: "", email: "", contents: "" });
 			}
 		} catch (err) {
+			console.error(`ERROR Contact: ${err.message}`);
 			handleShowError("Submit error! Try again.");
 		}
 	};

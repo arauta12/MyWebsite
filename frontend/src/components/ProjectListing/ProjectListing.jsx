@@ -39,18 +39,6 @@ function ProjectListing() {
 		setProjectIndex(newIndex);
 	};
 
-	const saveProject = async () => {
-		try {
-			// const res = await axios.post
-		} catch (err) {
-			console.error(`Save project error: ${err.message}`);
-		}
-	};
-
-	const deleteProject = () => {
-		console.log("Remove project!");
-	};
-
 	const selectedProject = projects.length ? projects[projectIndex] : {};
 
 	return (
@@ -92,11 +80,7 @@ function ProjectListing() {
 								</button>
 							))}
 						</div>
-						<Project
-							{...selectedProject}
-							canEdit={false}
-							deleteProject={deleteProject}
-						/>
+						<Project {...selectedProject} />
 					</>
 				)}
 			</div>

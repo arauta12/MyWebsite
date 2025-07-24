@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AdminHeader from "../adminComponents/AdminHeader";
-import AdminProjectListing from "../adminComponents/AdminProjectListing";
+import AdminProjectListing from "../adminComponents/AdminProjectListing/AdminProjectListing";
 import MessageList from "../adminComponents/MessageList/MessageList";
 import axios from "axios";
 import "./Admin.css";

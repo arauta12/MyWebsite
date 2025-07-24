@@ -22,7 +22,7 @@ const getAllProjects = async (req, res) => {
     // const { filter = "" } = req.body;
 
     try {
-        const projects = await Project.find({}, '-_id -__v');
+        const projects = await Project.find({});
         return res.status(200).json({ status: "success", data: projects });
     } catch (err) {
         console.error(chalk.red(`PROJECT ROUTE ERROR: ${err.message}!`));
@@ -38,7 +38,7 @@ const getProject = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const project = await Project.findById(id, '-_id -__v');
+        const project = await Project.findById(id);
         return res.status(200).json({ status: "success", data: project });
     } catch (err) {
         console.error(chalk.red(`PROJECT ROUTE ERROR: ${err.message}!`));
@@ -58,8 +58,8 @@ const createProject = async (req, res) => {
         if (!name || !description || !link)
             return res.status(400).json({ status: "failed", message: "Missing required fields!" });
 
-        await Project.create({ name, image, description, link, show });
-        return res.status(201).json({ status: "success", data: { name, show } });
+        const newProject = await Project.create({ name, image, description, link, show });
+        return res.status(201).json({ status: "success", data: { name, show, id: newProject._id } });
     } catch (err) {
         console.error(chalk.red(`PROJECT ROUTE ERROR: ${err.message}!`));
         return res.status(500).json({ status: "failed", message: "Something went wrong. Try again." });
@@ -74,7 +74,7 @@ const deleteProject = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const { name, show } = await Project.findByIdAndDelete(id, '-_id -__v');
+        const { name, show } = await Project.findByIdAndDelete(id);
         return res.status(200).json({ status: "success", data: { name, show } });
     } catch (err) {
         console.error(chalk.red(`PROJECT ROUTE ERROR: ${err.message}!`));

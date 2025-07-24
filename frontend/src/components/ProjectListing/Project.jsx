@@ -1,19 +1,9 @@
 import "./Project.css";
 
-function Project({ name, image, description, link, canEdit, deleteProject }) {
+function Project({ name, image, description, link }) {
 	return (
 		<section className="project">
-			<h3>
-				{name}
-				{canEdit && (
-					<button
-						className="del-project-button edit-button project-button"
-						onClick={deleteProject}
-					>
-						-
-					</button>
-				)}
-			</h3>
+			<h3>{name}</h3>
 
 			<div className="projectInfo">
 				<img

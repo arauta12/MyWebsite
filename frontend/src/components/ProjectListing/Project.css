@@ -13,9 +13,19 @@
 
 .project img {
     max-height: 300px;
-    float: left;
-    margin: 0 2rem 1rem 0;
+    display: block;
+    margin-inline: auto;
+    margin-bottom: 2rem;
     border-radius: 20px;
+}
+
+.project ul {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1rem;
+}
+.project li {
+    margin-left: 1rem;
 }
 
 .project ul, .project a {
@@ -26,7 +36,7 @@
 .project a {
     display: block;
     text-align: center;
-    margin-top: 1rem;
+    margin-top: 2rem;
     text-decoration: underline;
 
     color: var(--text-color);
@@ -34,14 +44,4 @@
 
 .project a:hover {
     color: var(--nav-hover-color);
-}
-
-.del-project-button {
-    float: right;
-    margin-left: -50px;
-    background-color: var(--complement-color);
-}
-
-.del-project-button:hover {
-    background-color: red;
 }
