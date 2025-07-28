@@ -121,7 +121,7 @@ function Contact() {
 							required
 						></textarea>
 					</div>
-					<div style={{ display: "flex", flexFlow: "row nowrap" }}>
+					<div className="contact-button">
 						<button type="submit">Send message</button>
 						<div
 							style={{

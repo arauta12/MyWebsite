@@ -2,6 +2,8 @@ import "./Navbar.css";
 
 // TODO: fix position of LinkendIn icon to end
 function Navbar() {
+	// console.log(window.innerWidth);
+
 	return (
 		<nav>
 			<p className="nav-item">

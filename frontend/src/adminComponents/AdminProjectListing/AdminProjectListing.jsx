@@ -43,10 +43,15 @@ function AdminProjectListing({ role }) {
 		setEdit(false);
 	};
 
+	const handleSaveImage = async (file) => {
+		const reader = new FileReader();
+		reader.onload = () => {
+			console.log(reader.result);
+		};
+	};
+
 	const saveProject = async (projectObj) => {
 		try {
-			console.log("Inside save proj");
-
 			const file = projectObj.file;
 			const descriptionList =
 				projectObj?.description?.split("\n\n") || [];
@@ -59,8 +64,6 @@ function AdminProjectListing({ role }) {
 			};
 
 			console.log(file);
-
-			console.log(newProject);
 
 			const resp = await axios.post(
 				"http://localhost:3000/api/projects",
@@ -102,8 +105,6 @@ function AdminProjectListing({ role }) {
 
 		if (resp) {
 			try {
-				console.log(selectedProject);
-
 				const resp = await axios.delete(
 					`http://localhost:3000/api/projects/${selectedProject._id}`
 				);

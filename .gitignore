@@ -6,3 +6,5 @@ frontend/TODO.md
 frontend/coverage
 
 backend/node_modules/
+backend/logs/
+backend/uploads

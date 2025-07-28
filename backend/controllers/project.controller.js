@@ -1,7 +1,11 @@
 const Project = require('../models/project.model');
 const chalk = require('chalk');
 
-
+/**
+ * Get projects for public display
+ * 
+ * @returns List of all public project objects
+ */
 const getDisplayProjects = async (req, res) => {
     try {
         const projects = await Project.find({ show: true }, '-_id -__v');
@@ -15,8 +19,7 @@ const getDisplayProjects = async (req, res) => {
 /**
  * Get every project that exists
  * 
- * Filter is passed in the body to select particular ones
- * @returns List of all project objects satisfying the conditions
+ * @returns List of all project objects
  */
 const getAllProjects = async (req, res) => {
     // const { filter = "" } = req.body;

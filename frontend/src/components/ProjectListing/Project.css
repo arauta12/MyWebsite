@@ -12,7 +12,8 @@
 }
 
 .project img {
-    max-height: 300px;
+    max-width: 250px;
+    height: auto;
     display: block;
     margin-inline: auto;
     margin-bottom: 2rem;
@@ -44,4 +45,18 @@
 
 .project a:hover {
     color: var(--nav-hover-color);
+}
+
+@media (width <= 550px) {
+    .project img {
+        max-width: 200px;
+        height: auto;
+    }
+}
+
+@media (width <= 375px) {
+    .project img {
+        max-width: 150px;
+        height: auto;
+    }
 }

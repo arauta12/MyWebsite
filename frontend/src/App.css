@@ -35,3 +35,14 @@ h1 {
     font-size: 2.5rem;
 }
 
+@media (width <= 550px) {
+    html {
+        font-size: 12px;
+    }
+}
+
+@media (width <= 375px) {
+    html {
+        font-size: 10px;
+    }
+}

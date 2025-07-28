@@ -11,8 +11,8 @@ router.get('/', projectControl.getAllProjects);
 router.get('/:id', projectControl.getProject);
 
 router.use(verifyAdmin);
+router.delete('/:id', projectControl.deleteProject);
 router.post('/', projectControl.createProject);
 router.patch('/:id', projectControl.updateProject);
-router.delete('/:id', projectControl.deleteProject);
 
 module.exports = router;

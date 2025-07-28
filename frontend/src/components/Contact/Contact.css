@@ -1,3 +1,7 @@
+#contact {
+    min-height: 100vh;
+}
+
 #contact > h2 {
     text-decoration: underline;
     font-size: 3rem;
@@ -7,7 +11,7 @@
 
 .contact-section {
     display: flex;
-    flex-direction: row;
+    /* flex-flow: row wrap; */
     justify-content: center;
     gap: 2rem;
 }
@@ -49,6 +53,11 @@ form button {
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
+.contact-button {
+    align-self: center;
+    justify-self: center;
+}
+
 form button:hover {
     cursor: pointer;
     box-shadow: 0 0 20px rgba(252, 79, 79, 0.5);
@@ -87,4 +96,18 @@ input:focus, textarea:focus {
 
 .contact-link:hover {
     text-decoration: underline;
+}
+
+@media (width < 610px) {
+    .contact-section {
+        flex-flow: row wrap;
+    }
+
+    .section-item {
+        flex-basis: 100%;
+    }
+
+    .contact-info {
+        margin-top: 2rem;
+    }
 }

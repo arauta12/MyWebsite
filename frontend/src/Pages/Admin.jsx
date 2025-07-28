@@ -25,7 +25,7 @@ function Admin() {
 					setUserObj({ username, role });
 				}
 			} catch (err) {
-				console.error(err);
+				console.error(err.message);
 
 				if (err.response?.status <= 403 && err.response.status >= 400)
 					navigate("/admin");
@@ -46,8 +46,6 @@ function Admin() {
 				navigate("/#");
 			}
 		} catch (err) {
-			console.log();
-
 			setErrorMessage(
 				err.response?.data?.message || "Failed to logout! Try again."
 			);

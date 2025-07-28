@@ -23,11 +23,17 @@ function AdminEditProject({ projectObj, saveProject }) {
 	};
 
 	const handleFileChange = (e) => {
-		console.log(e.target);
-
 		const files = e.target.files;
+
 		setEditInfo({ ...editInfo, image: e.target.value });
 		setImageFile(files.length ? files[0] : null);
+
+		const reader = new FileReader();
+		reader.onload = () => {
+			console.log(reader.result);
+		};
+
+		reader.readAsArrayBuffer(files[0]);
 	};
 
 	return (

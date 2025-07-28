@@ -11,6 +11,7 @@ function ProjectListing() {
 	const [errorMessage, setErrorMessage] = useState("");
 	const [projects, setProjects] = useState([]);
 	const [projectIndex, setProjectIndex] = useState(0);
+	// const [imageUrls, setImageUrls] = useState([]);
 
 	useEffect(() => {
 		const handleGetProjects = async () => {
@@ -23,7 +24,7 @@ function ProjectListing() {
 				);
 
 				setProjects(result.data.data);
-				setIsLoading(false);
+				// return result.data.data;
 			} catch (err) {
 				console.error(`ERROR: ${err.message}`);
 				setErrorMessage("Could not get project info.");

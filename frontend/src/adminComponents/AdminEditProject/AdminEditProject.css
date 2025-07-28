@@ -42,8 +42,8 @@
 }
 
 .edit-container button {
-    width: 30%;
-    min-width: fit-content;
+    min-width: 150px;
+    width: 33%;
     align-self: center;
     background-color: rgb(26, 174, 68, 0.3);
     border-color: rgb(26, 174, 68, 1);
