@@ -8,6 +8,12 @@ on:
         branches:
             - main
     workflow_dispatch:
+        inputs:
+            branch_name:
+                description: "Branch to run tests"
+                required: true
+                default: "staging"
+
 jobs:
     test:
         runs-on: ubuntu-latest
