@@ -17,7 +17,7 @@ on:
 jobs:
     test:
         runs-on: ubuntu-latest
-        name: Building
+        name: Building and Testing
         steps:
             - uses: actions/checkout@v4
 
