@@ -9,7 +9,7 @@ on:
             - main
     workflow_dispatch:
 jobs:
-    build:
+    test:
         runs-on: ubuntu-latest
         name: Building
         steps:
