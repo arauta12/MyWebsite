@@ -1,4 +1,5 @@
 const Message = require('../models/message.model');
+const chalk = require('chalk');
 
 /**
  * Get all messages
@@ -20,7 +21,10 @@ const getMessages = async (req, res) => {
 
 
 const createMessage = async (req, res) => {
-    const { data = {} } = req.body;
+    if (!req.body?.data)
+        return res.status(400).json({ status: "failed", message: "Missing required fields!" });
+
+    const { data } = req.body;
     const { name, email, contents } = data;
 
     try {

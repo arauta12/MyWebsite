@@ -13,7 +13,7 @@ const verifyToken = async (req, res, next) => {
         const { exp, username, role } = jwt.verify(jwtToken, process.env.JWT_SECRET);
         const existingUser = await User.findOne({ username, role });
 
-        if (!existingUser || !existingUser.loggedIn)
+        if (!existingUser || !existingUser.loggedIn || (exp <= (Math.ceil(Date.now() / 1000))))
             return res.status(401).json({ status: "failed", message: "Unauthorized!" });
 
         req.locals = role;
@@ -65,29 +65,32 @@ const login = async (req, res) => {
         const jwtToken = req.cookies.jwt_token;
 
         if (jwtToken) {
+
             const jwtData = jwt.verify(jwtToken, process.env.JWT_SECRET);
 
             const { exp, username, role } = jwtData;
             const existingUser = await User.findOne({ username, role });
 
             if (existingUser && existingUser.loggedIn) {
-                const expired = (exp <= (Math.ceil(Date.now() / 1000)));
-                if (!expired) {
-                    return res.status(200).json({ status: "success", data: { username: jwtData.username, role: jwtData.role } });
-                }
+                return res.status(200).json({ status: "success", data: { username: jwtData.username, role: jwtData.role } });
             }
         }
+    } catch (err) {
+        res.clearCookie("jwt_token");
+    }
 
+    try {
         if (!data || !username || !password)
             return res.status(400).json({ status: "failed", message: "Missing username or password!" });
 
         const user = await User.findOne({ username });
+
         const passwordCompare = await bcrypt.compare(password, user?.password || "");
 
         if (!user || !passwordCompare)
             return res.status(401).json({ status: "failed", message: "Invalid credentials!" });
 
-        const token = await jwt.sign({ username, role: user.role }, process.env.JWT_SECRET, {
+        const token = jwt.sign({ username, role: user.role }, process.env.JWT_SECRET, {
             expiresIn: '10h',
         });
 
@@ -103,25 +106,36 @@ const login = async (req, res) => {
 
         return res.status(200).json({ status: "success", data: { username, role: user.role } });
     } catch (err) {
-        console.error(chalk.red(`ERROR Login: ${err.message}`));
-        return res.status(500).json({ status: "failed", message: "Something went wrong! Try again." });
+        console.error(chalk.red(`LOGIN ERROR: ${err.message}`));
+        return res.status(500).json({ status: "failed", message: "Something went wrong. Try again." });
     }
 };
 
 const logout = async (req, res) => {
+    if (!req.cookies?.jwt_token)
+        return res.status(401).json({ status: "failed", message: "Invalid credentials." });
+
+    const jwtString = req.cookies.jwt_token;
+
+    let jwtData = {};
+
     try {
-        const jwtString = req.cookies.jwt_token;
-        const jwtData = jwt.verify(jwtString, process.env.JWT_SECRET);
+        jwtData = jwt.verify(jwtString, process.env.JWT_SECRET);
 
-        if (!jwtData.username || !jwtData.role)
+        if (!jwtData?.username || !jwtData.role)
             return res.status(401).json({ status: "failed", message: "Invalid credentials." });
+    } catch (err) {
+        return res.status(401).json({ status: "failed", message: "Invalid credentials." });
+    }
 
+    try {
         const user = await User.findOne({ username: jwtData.username, role: jwtData.role });
         if (!user)
             return res.status(401).json({ status: "failed", message: "Invalid credentials." });
 
         user.loggedIn = false;
         res.clearCookie("jwt_token");
+
         return res.status(200).json({ status: "success", data: user.username });
     } catch (err) {
         console.error(chalk.red(`ERROR Logout: ${err.message}`));

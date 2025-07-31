@@ -22,9 +22,6 @@ describe('Get public projects', () => {
                 return filteredProject;
         });
 
-        console.log(expectedProjects);
-
-
         Project.find.mockImplementation(async ({ show }, hideAttributes) => {
             const hiddenAttributes = hideAttributes.split(" ").map(key => key.substring(1));
 
@@ -68,7 +65,6 @@ describe('Get public projects', () => {
         expect(resp.json.mock.calls[ 0 ][ 0 ]).toStrictEqual({ status: "failed", message: "Something went wrong. Try again." });
     });
 });
-
 
 describe('Get all projects', () => {
 
