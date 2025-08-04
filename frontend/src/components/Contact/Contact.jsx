@@ -79,7 +79,7 @@ function Contact() {
 		<section id="contact">
 			<h2>Contact</h2>
 			<div className="contact-section">
-				<form className="section-item" onSubmit={handleSubmit}>
+				<form className="section-item">
 					<div>
 						<input
 							type="text"
@@ -122,13 +122,14 @@ function Contact() {
 						></textarea>
 					</div>
 					<div className="contact-button">
-						<button type="submit">Send message</button>
+						<button type="submit" onClick={handleSubmit}>
+							Send message
+						</button>
 						<div
 							style={{
-								alignSelf: "center",
-								marginLeft: "1rem",
 								color: submitMessageObj.color,
-								fontSize: "1rem",
+								fontSize: "1.25rem",
+								marginTop: "-0.5rem",
 							}}
 						>
 							<p>{submitMessageObj.message}</p>

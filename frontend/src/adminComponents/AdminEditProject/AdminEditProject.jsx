@@ -39,7 +39,7 @@ function AdminEditProject({ projectObj, saveProject }) {
 	return (
 		<section className="project edit-container">
 			<h3>New Project</h3>
-			<form onSubmit={createProject}>
+			<form>
 				<div className="edit-item">
 					<label htmlFor="name">Name: </label>
 					<input
@@ -123,7 +123,9 @@ function AdminEditProject({ projectObj, saveProject }) {
 					</label>
 				</div>
 
-				<button type="submit">Create</button>
+				<button type="submit" onClick={createProject}>
+					Create
+				</button>
 			</form>
 		</section>
 	);

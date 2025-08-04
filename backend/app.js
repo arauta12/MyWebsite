@@ -14,11 +14,13 @@ const uploadRoute = require('./routes/uploads.route');
 
 const app = express();
 
+const whitelist = [
+    "http://localhost:3000",
+    "http://localhost:5173",
+    "http://localhost:8080",
+];
 const corsConfig = {
-    origin: [
-        "http://localhost:3000",
-        "http://localhost:5173",
-    ],
+    origin: whitelist,
     credentials: true,
     optionsSuccessStatus: 200
 };
