@@ -1,19 +1,35 @@
 const Project = require('../models/project.model');
+const chalk = require('chalk');
+
+/**
+ * Get projects for public display
+ * 
+ * @returns List of all public project objects
+ */
+const getDisplayProjects = async (req, res) => {
+    try {
+        const projects = await Project.find({ show: true }, '-_id -__v');
+        return res.status(200).json({ status: "success", data: projects });
+    } catch (err) {
+        console.error(chalk.red(`PROJECT ROUTE ERROR: ${err.message}!`));
+        return res.status(500).json({ status: "failed", message: "Something went wrong. Try again." });
+    }
+};
 
 /**
  * Get every project that exists
  * 
- * Filter is passed in the body to select particular ones
- * @returns List of all project objects satisfying the conditions
+ * @returns List of all project objects
  */
 const getAllProjects = async (req, res) => {
     // const { filter = "" } = req.body;
 
     try {
-        const projects = await Project.find({}, '-_id -__v');
-        return res.status(200).json(projects);
+        const projects = await Project.find({});
+        return res.status(200).json({ status: "success", data: projects });
     } catch (err) {
-        return res.status(500).json({ status: "failed", message: err.message });
+        console.error(chalk.red(`PROJECT ROUTE ERROR: ${err.message}!`));
+        return res.status(500).json({ status: "failed", message: "Something went wrong. Try again." });
     }
 };
 
@@ -22,13 +38,20 @@ const getAllProjects = async (req, res) => {
  * @returns All project data
  */
 const getProject = async (req, res) => {
+    if (!req.params?.id)
+        return res.status(400).json({ status: "failed", message: "Missing id!" });
+
     const { id } = req.params;
 
     try {
         const project = await Project.findById(id);
-        return res.status(200).json(project);
+        if (!project)
+            return res.status(400).json({ status: "failed", message: "No such project!" });
+
+        return res.status(200).json({ status: "success", data: project });
     } catch (err) {
-        return res.status(500).json({ status: "failed", message: err.message });
+        console.error(chalk.red(`PROJECT ROUTE ERROR: ${err.message}!`));
+        return res.status(500).json({ status: "failed", message: "Something went wrong. Try again." });
     }
 };
 
@@ -37,17 +60,22 @@ const getProject = async (req, res) => {
  * @returns New project's name and show in a data object
  */
 const createProject = async (req, res) => {
-    const { data = {} } = req.body;
-    const { name, image, description, link, show } = data;
+    if (!req.body?.data)
+        return res.status(400).json({ status: "failed", message: "Missing required fields!" });
+
+    const { data } = req.body;
 
     try {
-        if (!name || !description || !link)
+        if (!data?.name || !data.description || !data.link)
             return res.status(400).json({ status: "failed", message: "Missing required fields!" });
 
-        await Project.create({ name, image, description, link, show });
-        return res.status(201).json({ status: "success", data: { name, show } });
+        const { name, image, description, link, show } = data;
+
+        const newProject = await Project.create({ name, image, description, link, show });
+        return res.status(201).json({ status: "success", data: { name, show, id: newProject._id } });
     } catch (err) {
-        return res.status(500).json({ status: "failed", message: err.message });
+        console.error(chalk.red(`PROJECT ROUTE ERROR: ${err.message}!`));
+        return res.status(500).json({ status: "failed", message: "Something went wrong. Try again." });
     }
 };
 
@@ -56,13 +84,20 @@ const createProject = async (req, res) => {
  * @returns Deleted project's name and show in a data object
  */
 const deleteProject = async (req, res) => {
+    if (!req.params?.id)
+        return res.status(400).json({ status: "failed", message: "Missing id!" });
+
     const { id } = req.params;
 
     try {
-        const { name, show } = await Project.findByIdAndDelete(id);
-        return res.status(200).json({ status: "success", data: { name, show } });
+        const deletedProject = await Project.findByIdAndDelete(id);
+        if (!deletedProject)
+            return res.status(400).json({ status: "failed", message: "No such project!" });
+
+        return res.status(200).json({ status: "success", data: { name: deletedProject.name, show: deletedProject.show } });
     } catch (err) {
-        return res.status(500).json({ status: "failed", message: err.message });
+        console.error(chalk.red(`PROJECT ROUTE ERROR: ${err.message}!`));
+        return res.status(500).json({ status: "failed", message: "Something went wrong. Try again." });
     }
 };
 
@@ -73,16 +108,28 @@ const deleteProject = async (req, res) => {
  * @returns Updated project's name and show in a data object
  */
 const updateProject = async (req, res) => {
+    if (!req.params?.id)
+        return res.status(400).json({ status: "failed", message: "Missing id!" });
+
     const { id } = req.params;
-    const { data } = req.body;
+    const { data } = req.body ?? { data: {} };
+
+    const prohibitedFields = [ "_id", "__v", "createdAt", "updatedAt" ];
+
+    prohibitedFields.forEach(key => {
+        if (data && key in data)
+            delete data[ key ];
+    });
 
     try {
-        const project = await Project.findByIdAndUpdate(id, data);
-        console.log(data);
+        const project = await Project.findByIdAndUpdate(id, data, { new: true });
+        if (!project)
+            return res.status(400).json({ status: "failed", message: "No such project!" });
 
-        return res.status(200).json({ status: "success", data });
+        return res.status(200).json({ status: "success", data: { name: project.name, show: project.show } });
     } catch (err) {
-        return res.status(500).json({ status: "failed", message: err.message });
+        console.error(chalk.red(`PROJECT ROUTE ERROR: ${err.message}!`));
+        return res.status(500).json({ status: "failed", message: "Something went wrong. Try again." });
     }
 };
 
@@ -91,5 +138,6 @@ module.exports = {
     getProject,
     createProject,
     deleteProject,
-    updateProject
+    updateProject,
+    getDisplayProjects
 };

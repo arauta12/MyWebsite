@@ -12,11 +12,15 @@ const userSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        default: "viewer",
+        default: "elite",
         enum: {
-            values: [ 'admin', 'viewer' ],
+            values: [ 'Admin', 'Elite' ],
             message: '{VALUE} is not a valid role!'
         }
+    },
+    loggedIn: {
+        type: Boolean,
+        default: false
     }
 });
 

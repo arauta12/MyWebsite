@@ -1,16 +1,17 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import Loading from "../../components/Loading";
-import CreateProject from "../CreateProject";
+import AdminEditProject from "../AdminEditProject/AdminEditProject";
 import Project from "../../components/ProjectListing/Project";
-import "../../components/ProjectListing/ProjectListing";
+import "./AdminProjectListing.css";
+import axios from "axios";
 
-function AdminProjectListing() {
+function AdminProjectListing({ role }) {
 	const [isLoading, setIsLoading] = useState(true);
 	const [errorMessage, setErrorMessage] = useState("");
 	const [projects, setProjects] = useState([]);
 	const [projectIndex, setProjectIndex] = useState(0);
-	const [newProjectObj, setNewProjectObj] = useState({});
+
+	const [edit, setEdit] = useState(false);
 
 	useEffect(() => {
 		const handleGetProjects = async () => {
@@ -18,16 +19,17 @@ function AdminProjectListing() {
 				const result = await axios.get(
 					"http://localhost:3000/api/projects",
 					{
-						filter: { show: true },
 						timeout: 5000,
 					}
 				);
 
-				setProjects(result.data);
+				setProjects(result.data.data);
 				setIsLoading(false);
 			} catch (err) {
 				console.error(`ERROR: ${err.message}`);
-				setErrorMessage("Could not get project info.");
+				setErrorMessage(
+					err.response?.data?.message || "Could not get projects."
+				);
 			} finally {
 				setIsLoading(false);
 			}
@@ -38,18 +40,94 @@ function AdminProjectListing() {
 
 	const handleChangeIndex = (newIndex) => {
 		setProjectIndex(newIndex);
+		setEdit(false);
 	};
 
-	const saveProject = async () => {
+	const handleSaveImage = async (file) => {
+		const reader = new FileReader();
+		reader.onload = () => {
+			console.log(reader.result);
+		};
+	};
+
+	const saveProject = async (projectObj) => {
 		try {
-			// const res = await axios.post
+			const file = projectObj.file;
+			const descriptionList =
+				projectObj?.description?.split("\n\n") || [];
+			delete projectObj.file;
+
+			const newProject = {
+				...projectObj,
+				image: file?.name,
+				description: descriptionList,
+			};
+
+			console.log(file);
+
+			const resp = await axios.post(
+				"http://localhost:3000/api/projects",
+				{
+					data: newProject,
+					timeout: 5000,
+				}
+			);
+
+			if (resp.data.status >= 400) {
+				setErrorMessage("Could not create project!");
+
+				setTimeout(() => {
+					setErrorMessage("");
+				}, 3000);
+			} else {
+				const { data } = resp.data;
+				setProjects([{ ...newProject, _id: data.id }, ...projects]);
+			}
 		} catch (err) {
 			console.error(`Save project error: ${err.message}`);
+			setErrorMessage("Could not create project!");
+
+			setTimeout(() => {
+				setErrorMessage("");
+			}, 3000);
 		}
 	};
 
-	const deleteProject = () => {
-		console.log("Remove project!");
+	const deleteProject = async () => {
+		if (edit) return;
+
+		if (selectedProject.show == true) {
+			alert(`Can't delete: ${selectedProject.name} is public!`);
+			return;
+		}
+
+		const resp = confirm(`Delete "${selectedProject.name}"? (PERMANENT)`);
+
+		if (resp) {
+			try {
+				const resp = await axios.delete(
+					`http://localhost:3000/api/projects/${selectedProject._id}`
+				);
+
+				const { status, data, message } = resp.data;
+
+				if (status >= 400) {
+					alert(`Error: ${message}`);
+				} else {
+					alert(`Deleted ${data.name}.`);
+					setProjects(
+						projects.filter(
+							(project) => project._id !== selectedProject._id
+						)
+					);
+					setProjectIndex(0);
+				}
+			} catch (err) {
+				console.error(`Delete project error: ${err.message}`);
+
+				alert(`Failed to delete ${selectedProject.name}`);
+			}
+		}
 	};
 
 	const selectedProject = projects.length ? projects[projectIndex] : {};
@@ -82,13 +160,30 @@ function AdminProjectListing() {
 					</div>
 				) : (
 					<>
-						<div className="buttons-container">
-							<button
-								className="edit-button add-project-button project-button"
-								onClick={saveProject}
-							>
-								+
-							</button>
+						<div className="buttons-container manager-container">
+							{role === "Admin" && (
+								<>
+									<button
+										className="edit-button delete-button"
+										onClick={deleteProject}
+									>
+										<img
+											src="/images/delete.png"
+											alt=""
+											width={15}
+											height={15}
+											style={{ marginRight: "10px" }}
+										/>
+										{selectedProject.name}
+									</button>
+									<button
+										className="edit-button new-button"
+										onClick={() => setEdit(true)}
+									>
+										New
+									</button>
+								</>
+							)}
 
 							{projects.map((project, i) => (
 								<button
@@ -100,11 +195,15 @@ function AdminProjectListing() {
 								</button>
 							))}
 						</div>
-						<Project
-							{...selectedProject}
-							canEdit={true}
-							deleteProject={deleteProject}
-						/>
+
+						{edit ? (
+							<AdminEditProject
+								projectObj={{ show: false }}
+								saveProject={saveProject}
+							/>
+						) : (
+							<Project {...selectedProject} />
+						)}
 					</>
 				)}
 			</div>

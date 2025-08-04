@@ -5,6 +5,7 @@ import axios from "axios";
 import "./MessageList.css";
 
 function MessageList() {
+	axios.defaults.withCredentials = true; // Ensure cookies are sent with requests
 	const [isLoading, setIsLoading] = useState(false);
 	const [messageList, setMessageList] = useState([]);
 	const [errorMessage, setErrorMessage] = useState("");
@@ -17,9 +18,12 @@ function MessageList() {
 					"http://localhost:3000/api/messages",
 					{ timeout: 5000 }
 				);
-				setMessageList(res.data);
-			} catch (error) {
-				setErrorMessage(`Could not get messages: ${error.message}`);
+				setMessageList(res.data.data);
+			} catch (err) {
+				console.error(`ERROR: ${err.message}`);
+				setErrorMessage(
+					err.response?.data?.message || "Could not get messages."
+				);
 			} finally {
 				setIsLoading(false);
 			}

@@ -3,3 +3,31 @@
     padding: 1rem;
     font-size: 4rem;
 }
+
+#logout {
+    display: flex;
+    gap: 1rem;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.logout-button {
+    margin-top: -1rem;
+    padding: 1rem;
+    font-size: 2rem;
+    border: 1px solid var(--complement-color);
+    background-color: var(--complement-color);
+    color: var(--text-color);
+    border-radius: 25px;
+
+    transform: scale(1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.logout-button:hover {
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(252, 79, 79, 0.5);
+    transform: scale(1.05);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}

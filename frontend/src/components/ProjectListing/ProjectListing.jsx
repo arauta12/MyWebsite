@@ -6,25 +6,25 @@ import "./ProjectListing.css";
 
 // NOTE: remove console.log statements
 
-function ProjectListing({ canEdit }) {
+function ProjectListing() {
 	const [isLoading, setIsLoading] = useState(true);
 	const [errorMessage, setErrorMessage] = useState("");
 	const [projects, setProjects] = useState([]);
 	const [projectIndex, setProjectIndex] = useState(0);
+	// const [imageUrls, setImageUrls] = useState([]);
 
 	useEffect(() => {
 		const handleGetProjects = async () => {
 			try {
 				const result = await axios.get(
-					"http://localhost:3000/api/projects",
+					"http://localhost:3000/api/projects/public",
 					{
-						filter: { show: true },
 						timeout: 5000,
 					}
 				);
 
-				setProjects(result.data);
-				setIsLoading(false);
+				setProjects(result.data.data);
+				// return result.data.data;
 			} catch (err) {
 				console.error(`ERROR: ${err.message}`);
 				setErrorMessage("Could not get project info.");
@@ -38,18 +38,6 @@ function ProjectListing({ canEdit }) {
 
 	const handleChangeIndex = (newIndex) => {
 		setProjectIndex(newIndex);
-	};
-
-	const saveProject = async () => {
-		try {
-			// const res = await axios.post
-		} catch (err) {
-			console.error(`Save project error: ${err.message}`);
-		}
-	};
-
-	const deleteProject = () => {
-		console.log("Remove project!");
 	};
 
 	const selectedProject = projects.length ? projects[projectIndex] : {};
@@ -93,11 +81,7 @@ function ProjectListing({ canEdit }) {
 								</button>
 							))}
 						</div>
-						<Project
-							{...selectedProject}
-							canEdit={false}
-							deleteProject={deleteProject}
-						/>
+						<Project {...selectedProject} />
 					</>
 				)}
 			</div>

@@ -1,0 +1,50 @@
+
+
+.edit-container form {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 2rem;
+}
+
+.edit-item {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 1rem;
+    justify-content: flex-start;
+    align-items: center;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+.edit-item input {
+    margin: 0;
+    max-width: max-content;
+}
+
+.textarea {
+    flex-flow: column nowrap;
+    align-items: flex-start;
+}
+
+.textarea textarea {
+    margin-bottom: 0;
+}
+
+.radio {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    padding: 0;
+}
+
+.radio input {
+    margin-left: 5px;
+}
+
+.edit-container button {
+    min-width: 150px;
+    width: 33%;
+    align-self: center;
+    background-color: rgb(26, 174, 68, 0.3);
+    border-color: rgb(26, 174, 68, 1);
+}

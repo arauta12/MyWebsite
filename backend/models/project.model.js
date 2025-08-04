@@ -6,7 +6,10 @@ const projectSchema = new mongoose.Schema({
         required: true,
         default: "Unnamed"
     },
-    image: String,
+    image: {
+        type: [ String ],
+        default: []
+    },
     description: {
         type: [ String ],
         required: true,

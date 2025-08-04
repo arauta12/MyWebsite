@@ -2,10 +2,10 @@ const { config } = require('dotenv');
 const process = require('process');
 const app = require('./app');
 const { mongoose, connect } = require('./db/mongo');
+
 const chalk = require('chalk');
 
 config();
-
 const PORT = process.env.PORT | 3000;
 
 const server = app.listen(PORT, (err) => {

@@ -1,4 +1,3 @@
-// import Layout from "../components/Layout/Layout";
 import EmergeView from "../components/EmergeView";
 import Home from "../components/Home/Home";
 import About from "../components/About/About";
@@ -11,15 +10,12 @@ function Main() {
 			<EmergeView>
 				<Home />
 			</EmergeView>
-			<hr />
 			<EmergeView>
 				<About />
 			</EmergeView>
-			<hr />
 			<EmergeView>
 				<ProjectListing />
 			</EmergeView>
-			<hr />
 			<EmergeView>
 				<Contact />
 			</EmergeView>

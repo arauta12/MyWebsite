@@ -1,25 +1,40 @@
+// import { useEffect, useState } from "react";
+// import axios from "axios";
 import "./Project.css";
 
-function Project({ name, image, description, link, canEdit, deleteProject }) {
+function Project({ name, image, description, link }) {
+	// const [url, setUrl] = useState("/images/noimage.jpg");
+
+	// useEffect(() => {
+	// 	const createUrl = async () => {
+	// 		const name = `${image[0]}-${image[1]}`;
+	// 		try {
+	// 			const resp = await axios.get(
+	// 				`http://localhost:3000/api/uploads/images/${name}`,
+	// 				{ timeout: 5000 }
+	// 			);
+
+	// 			setUrl(resp.data.data);
+	// 		} catch (err) {
+	// 			console.error(err.message);
+	// 		}
+	// 	};
+
+	// 	createUrl();
+	// }, []);
+
+	// console.log(`Image url: ${url}`);
+
 	return (
 		<section className="project">
-			<h3>
-				{name}
-				{canEdit && (
-					<button
-						className="del-project-button edit-button project-button"
-						onClick={deleteProject}
-					>
-						-
-					</button>
-				)}
-			</h3>
+			<h3>{name}</h3>
 
 			<div className="projectInfo">
 				<img
-					src={`/images/projectImages/${image}`}
+					src={`/images/projectImages/${image[1]}`}
 					alt={name}
 					height={300}
+					loading="lazy"
 				/>
 				<ul>
 					{description &&

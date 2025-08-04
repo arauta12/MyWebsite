@@ -1,0 +1,33 @@
+name: CI Pipeline
+on:
+    push:
+        branches:
+            - staging
+            - main
+    pull_request:
+        branches:
+            - main
+    workflow_dispatch:
+        inputs:
+            branch_name:
+                description: "Branch to run tests"
+                required: true
+                default: "staging"
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        name: Building and Testing
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Create NodeJS env
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22.x
+
+            - name: Install packages
+              run: npm ci && npm ci --prefix frontend && npm ci --prefix backend
+
+            - name: Run tests
+              run: npm test

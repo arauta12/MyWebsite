@@ -1,4 +1,5 @@
 const Message = require('../models/message.model');
+const chalk = require('chalk');
 
 /**
  * Get all messages
@@ -11,15 +12,19 @@ const getMessages = async (req, res) => {
 
     try {
         const messages = await Message.find({}, '-_id -__v');
-        return res.status(200).json(messages);
+        return res.status(200).json({ status: "success", data: messages });
     } catch (err) {
-        return res.status(500).json({ status: "failed", message: err.message });
+        console.error(chalk.red(`MESSAGE ROUTE ERROR: ${err.message}!`));
+        return res.status(500).json({ status: "failed", message: "Something went wrong. Try again." });
     }
 };
 
 
 const createMessage = async (req, res) => {
-    const { data = {} } = req.body;
+    if (!req.body?.data)
+        return res.status(400).json({ status: "failed", message: "Missing required fields!" });
+
+    const { data } = req.body;
     const { name, email, contents } = data;
 
     try {
@@ -27,9 +32,10 @@ const createMessage = async (req, res) => {
             return res.status(400).json({ status: "failed", message: "Missing required fields!" });
 
         await Message.create({ name, email, contents });
-        return res.status(201).json({ status: "success", data: { name } });
+        return res.status(201).json({ status: "success", data: name });
     } catch (err) {
-        return res.status(500).json({ status: "failed", message: err.message });
+        console.error(chalk.red(`MESSAGE ROUTE ERROR: ${err.message}!`));
+        return res.status(500).json({ status: "failed", message: "Something went wrong. Try again." });
     }
 };
 

@@ -12,10 +12,21 @@
 }
 
 .project img {
-    max-height: 300px;
-    float: left;
-    margin: 0 2rem 1rem 0;
+    max-width: 250px;
+    height: auto;
+    display: block;
+    margin-inline: auto;
+    margin-bottom: 2rem;
     border-radius: 20px;
+}
+
+.project ul {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1rem;
+}
+.project li {
+    margin-left: 1rem;
 }
 
 .project ul, .project a {
@@ -26,7 +37,7 @@
 .project a {
     display: block;
     text-align: center;
-    margin-top: 1rem;
+    margin-top: 2rem;
     text-decoration: underline;
 
     color: var(--text-color);
@@ -36,12 +47,16 @@
     color: var(--nav-hover-color);
 }
 
-.del-project-button {
-    float: right;
-    margin-left: -50px;
-    background-color: var(--complement-color);
+@media (width <= 550px) {
+    .project img {
+        max-width: 200px;
+        height: auto;
+    }
 }
 
-.del-project-button:hover {
-    background-color: red;
+@media (width <= 375px) {
+    .project img {
+        max-width: 150px;
+        height: auto;
+    }
 }

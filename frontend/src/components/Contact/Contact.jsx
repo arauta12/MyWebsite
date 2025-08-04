@@ -3,7 +3,11 @@ import axios from "axios";
 import "./Contact.css";
 
 function Contact() {
-	const [messageObj, setMessageObj] = useState({});
+	const [messageObj, setMessageObj] = useState({
+		name: "",
+		email: "",
+		contents: "",
+	});
 	const [submitMessageObj, setSubmitMessageObj] = useState({});
 
 	const handleShowError = (message) => {
@@ -36,12 +40,24 @@ function Contact() {
 		}
 
 		try {
-			await axios.post("http://localhost:3000/api/messages", {
+			const res = await axios.post("http://localhost:3000/api/messages", {
 				data: messageObj,
 			});
-			handleShowSuccess("Sent!");
-			setMessageObj({});
+
+			const status = res.data.status;
+			const name = res.data.data;
+
+			const displayName =
+				name.length > 10 ? name.substr(0, 7) + "..." : name;
+
+			if (status === "failed") {
+				handleShowError(res.data.message || "Failed to send.");
+			} else {
+				handleShowSuccess(`Thanks ${displayName}!`);
+				setMessageObj({ name: "", email: "", contents: "" });
+			}
 		} catch (err) {
+			console.error(`ERROR Contact: ${err.message}`);
 			handleShowError("Submit error! Try again.");
 		}
 	};
@@ -59,8 +75,6 @@ function Contact() {
 		}
 	};
 
-	console.log(messageObj);
-
 	return (
 		<section id="contact">
 			<h2>Contact</h2>
@@ -75,6 +89,7 @@ function Contact() {
 							required
 							autoComplete="name"
 							value={messageObj.name}
+							maxLength={200}
 							onChange={handleChangeMessage}
 						/>
 					</div>
@@ -87,6 +102,7 @@ function Contact() {
 							placeholder="Email"
 							autoComplete="email"
 							value={messageObj.email}
+							maxLength={200}
 							onChange={handleChangeMessage}
 							required
 						/>
@@ -100,21 +116,20 @@ function Contact() {
 							rows={5}
 							cols={30}
 							maxLength={1000}
-							value={messageObj.message}
+							value={messageObj.contents}
 							onChange={handleChangeMessage}
 							required
 						></textarea>
 					</div>
-					<div style={{ display: "flex", flexFlow: "row nowrap" }}>
+					<div className="contact-button">
 						<button type="submit" onClick={handleSubmit}>
 							Send message
 						</button>
 						<div
 							style={{
-								alignSelf: "center",
-								marginLeft: "1rem",
 								color: submitMessageObj.color,
-								fontSize: "1rem",
+								fontSize: "1.25rem",
+								marginTop: "-0.5rem",
 							}}
 						>
 							<p>{submitMessageObj.message}</p>
