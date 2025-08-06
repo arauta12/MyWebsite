@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "homepage": "https://arauta12.github.io/MyWebsite",
+  "homepage": "https://arauta12.github.io/MyWebsite/",
   "scripts": {
     "test": "concurrently \"cd backend && npm test\"",
     "front": "cd frontend && npm run dev",
