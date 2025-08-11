@@ -40,9 +40,12 @@ function Contact() {
 		}
 
 		try {
-			const res = await axios.post("http://localhost:3000/api/messages", {
-				data: messageObj,
-			});
+			const res = await axios.post(
+				`${import.meta.env.VITE_API_URI}/api/messages`,
+				{
+					data: messageObj,
+				}
+			);
 
 			const status = res.data.status;
 			const name = res.data.data;

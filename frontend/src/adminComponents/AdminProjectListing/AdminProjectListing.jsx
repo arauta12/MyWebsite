@@ -17,7 +17,7 @@ function AdminProjectListing({ role }) {
 		const handleGetProjects = async () => {
 			try {
 				const result = await axios.get(
-					"http://localhost:3000/api/projects",
+					`${import.meta.env.VITE_API_URI}/api/projects`,
 					{
 						timeout: 5000,
 					}
@@ -66,7 +66,7 @@ function AdminProjectListing({ role }) {
 			console.log(file);
 
 			const resp = await axios.post(
-				"http://localhost:3000/api/projects",
+				`${import.meta.env.VITE_API_URI}/api/projects`,
 				{
 					data: newProject,
 					timeout: 5000,
@@ -106,7 +106,9 @@ function AdminProjectListing({ role }) {
 		if (resp) {
 			try {
 				const resp = await axios.delete(
-					`http://localhost:3000/api/projects/${selectedProject._id}`
+					`${import.meta.env.VITE_API_URI}/api/projects/${
+						selectedProject._id
+					}`
 				);
 
 				const { status, data, message } = resp.data;
