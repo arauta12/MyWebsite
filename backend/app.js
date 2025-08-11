@@ -17,8 +17,10 @@ const app = express();
 const whitelist = [
     "http://localhost:3000",
     "http://localhost:5173",
-    "http://localhost:8080",
+    "http://localhost:80",
+    `http://ec2-3-131-91-133.us-east-2.compute.amazonaws.com`
 ];
+
 const corsConfig = {
     origin: whitelist,
     credentials: true,

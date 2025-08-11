@@ -1,6 +1,19 @@
 name: personalweb
 
 services:
+    proxy:
+        build: .
+        ports:
+            - "80:80"
+        networks:
+            - frontnet
+    frontend:
+        build: frontend
+        ports:
+            - "5173:5173"
+        networks:
+            - frontnet
+            - backnet
     backend:
         build: backend
         env_file:
@@ -8,7 +21,8 @@ services:
         restart: on-failure
         ports:
             - "3000:3000"
-    frontend:
-        build: frontend
-        ports:
-            - "8080:5173"
+        networks:
+            - backnet
+networks:
+    frontnet:
+    backnet:

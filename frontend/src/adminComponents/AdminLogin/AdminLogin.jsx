@@ -18,7 +18,7 @@ function AdminLogin() {
 		const autoLogin = async () => {
 			try {
 				const resp = await axios.post(
-					"http://localhost:3000/api/auth/login",
+					`${import.meta.env.VITE_API_URI}/api/auth/login`,
 					{}
 				);
 				if (resp.data?.status === "success") {
@@ -38,7 +38,7 @@ function AdminLogin() {
 
 		try {
 			const res = await axios.post(
-				"http://localhost:3000/api/auth/login",
+				`${import.meta.env.VITE_API_URI}/api/auth/login`,
 				{
 					data: { username, password },
 				}

@@ -1,5 +1,5 @@
 node_modules/
-.env
+**/*.env
 frontend/node_modules/
 frontend/dist/
 frontend/TODO.md
@@ -9,3 +9,5 @@ backend/node_modules/
 backend/coverage
 backend/logs/
 backend/uploads
+
+nginx.conf

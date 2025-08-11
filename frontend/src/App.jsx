@@ -5,7 +5,6 @@ import Main from "./Pages/Main";
 import Admin from "./Pages/Admin";
 import Error from "./Pages/Error";
 import AdminLogin from "./adminComponents/AdminLogin/AdminLogin";
-import AdminHeader from "./adminComponents/AdminHeader";
 import "./App.css";
 
 function App() {

@@ -4,8 +4,6 @@ import Loading from "../Loading";
 import Project from "./Project";
 import "./ProjectListing.css";
 
-// NOTE: remove console.log statements
-
 function ProjectListing() {
 	const [isLoading, setIsLoading] = useState(true);
 	const [errorMessage, setErrorMessage] = useState("");
@@ -17,7 +15,7 @@ function ProjectListing() {
 		const handleGetProjects = async () => {
 			try {
 				const result = await axios.get(
-					"http://localhost:3000/api/projects/public",
+					`${import.meta.env.VITE_API_URI}/api/projects/public`,
 					{
 						timeout: 5000,
 					}

@@ -15,7 +15,7 @@ function MessageList() {
 			try {
 				setIsLoading(true);
 				const res = await axios.get(
-					"http://localhost:3000/api/messages",
+					`${import.meta.env.VITE_API_URI}//api/messages`,
 					{ timeout: 5000 }
 				);
 				setMessageList(res.data.data);
